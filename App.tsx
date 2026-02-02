@@ -7,8 +7,7 @@ import {
   LogIn,
   ChevronRight,
   Menu,
-  X,
-  FileDown
+  X
 } from 'lucide-react';
 
 // --- Helper Components ---
@@ -173,7 +172,7 @@ const InstructorValue: React.FC = () => (
 const Outcomes: React.FC = () => (
   <Section>
     <div className="w-full">
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-center mb-16">完成課程後，你一定會具備</h2>
+      <h2 className="text-3xl md:text-4xl lg:text-5訂價5xl font-black text-center mb-16">完成課程後，你一定會具備</h2>
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
         {[
           "經營網站內容時，能夠用正確的架構撰文",
@@ -397,10 +396,6 @@ export default function App() {
     });
   }, []);
 
-  const handleExportPDF = () => {
-    window.print();
-  };
-
   return (
     <div className="min-h-screen bg-white selection:bg-gray-900 selection:text-white">
       <Header />
@@ -414,15 +409,6 @@ export default function App() {
         <CTA />
       </main>
       <Footer />
-
-      <button 
-        onClick={handleExportPDF}
-        className="fixed bottom-8 right-8 z-[60] bg-gray-900 text-white p-4 rounded-full shadow-2xl hover:bg-black hover:scale-110 transition-all flex items-center gap-2 group no-print"
-        title="匯出 PDF"
-      >
-        <FileDown className="w-6 h-6" />
-        <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 font-bold whitespace-nowrap">匯出 PDF</span>
-      </button>
     </div>
   );
 }

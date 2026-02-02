@@ -18,7 +18,7 @@
             background-size: 30px 30px;
         }
 
-        /* 列印優化樣式 */
+        /* 雖然移除按鈕，但保留基礎列印優化以防使用者手動列印 */
         @media print {
             .no-print {
                 display: none !important;
@@ -60,7 +60,7 @@
 </head>
 <body>
     <div id="root"></div>
-    <!-- Vite 的標準入口腳本路徑 -->
+    <!-- Vite 的標準入口腳本路徑，不使用 importmap -->
     <script type="module" src="/index.tsx"></script>
 </body>
 </html>
