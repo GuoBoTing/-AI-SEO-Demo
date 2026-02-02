@@ -172,7 +172,7 @@ const InstructorValue: React.FC = () => (
 const Outcomes: React.FC = () => (
   <Section>
     <div className="w-full">
-      <h2 className="text-3xl md:text-4xl lg:text-5訂價5xl font-black text-center mb-16">完成課程後，你一定會具備</h2>
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-center mb-16">完成課程後，你一定會具備</h2>
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
         {[
           "經營網站內容時，能夠用正確的架構撰文",
@@ -297,11 +297,11 @@ const Syllabus: React.FC = () => {
                 {section.title}
               </h3>
               <p className="text-gray-500 font-bold mb-8 text-lg lg:text-xl">{section.intro}</p>
-              <ul className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <ul className="grid grid-cols-1 gap-4">
                 {section.items.map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-gray-800 bg-gray-50 p-3 rounded-lg border border-transparent hover:border-gray-200 transition-colors">
+                  <li key={i} className="flex items-center gap-3 text-gray-800 bg-gray-50 p-4 rounded-lg border border-transparent hover:border-gray-200 transition-colors w-full">
                     <ChevronRight className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                    <span className="font-bold">{item}</span>
+                    <span className="font-bold text-lg">{item}</span>
                   </li>
                 ))}
               </ul>
