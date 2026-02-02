@@ -7,7 +7,8 @@ import {
   LogIn,
   ChevronRight,
   Menu,
-  X
+  X,
+  FileDown
 } from 'lucide-react';
 
 // --- Helper Components ---
@@ -21,8 +22,8 @@ const Placeholder: React.FC<{ height?: string; label?: string; className?: strin
   </div>
 );
 
-const Section: React.FC<{ children: React.ReactNode; id?: string; className?: string; noPadding?: boolean }> = ({ children, id, className = '', noPadding = false }) => (
-  <section id={id} className={`${noPadding ? '' : 'py-16 md:py-24'} px-6 md:px-12 lg:px-20 ${className}`}>
+const Section: React.FC<{ children: React.ReactNode; id?: string; className?: string; noPadding?: boolean; isPageBreak?: boolean }> = ({ children, id, className = '', noPadding = false, isPageBreak = false }) => (
+  <section id={id} className={`${noPadding ? '' : 'py-16 md:py-24'} px-6 md:px-12 lg:px-20 ${className} ${isPageBreak ? 'page-break' : ''}`}>
     <div className="w-full">
       {children}
     </div>
@@ -42,15 +43,13 @@ const Header: React.FC = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
+    <header className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md z-50 border-b border-gray-100 no-print">
       <div className="w-full px-6 md:px-12 lg:px-20 h-20 flex items-center justify-between">
-        {/* Logo */}
         <div className="flex items-center gap-2 font-black text-2xl tracking-tighter">
           <div className="w-8 h-8 bg-gray-900 rounded flex items-center justify-center text-white text-xs">AI</div>
           <span>秒站 SEO</span>
         </div>
 
-        {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8 font-bold text-gray-600">
           {navLinks.map((link) => (
             <a key={link.name} href={link.href} className="hover:text-gray-900 transition-colors">
@@ -62,13 +61,11 @@ const Header: React.FC = () => {
           </button>
         </nav>
 
-        {/* Mobile Toggle */}
         <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X /> : <Menu />}
         </button>
       </div>
 
-      {/* Mobile Nav */}
       {isOpen && (
         <nav className="md:hidden bg-white border-b border-gray-100 p-6 flex flex-col gap-4 font-bold">
           {navLinks.map((link) => (
@@ -89,21 +86,17 @@ const Header: React.FC = () => {
 
 const Hero: React.FC = () => (
   <section className="relative min-h-[80vh] flex items-center pt-20 overflow-hidden">
-    {/* Solid Color Background Image Placeholder */}
     <div className="absolute inset-0 z-0">
-      {/* Simulation of a background cover image with a solid color */}
       <div className="w-full h-full bg-slate-200 flex items-center justify-center">
          <div className="absolute inset-0 wireframe-pattern opacity-50" />
       </div>
-      {/* Overlay to ensure text readability */}
       <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent z-10" />
     </div>
 
     <div className="relative z-20 w-full px-6 md:px-12 lg:px-20 grid md:grid-cols-2 gap-12 items-center">
-      {/* Left Content */}
       <div className="text-left space-y-8 py-12">
         <div className="space-y-4">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 leading-[1.1] tracking-tight whitespace-nowrap">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 leading-[1.1] tracking-tight">
             AI SEO 速攻學
           </h1>
           <p className="text-2xl lg:text-3xl text-gray-600 font-medium">
@@ -111,7 +104,7 @@ const Hero: React.FC = () => (
           </p>
         </div>
         
-        <div className="p-8 border-2 border-gray-900 rounded-3xl bg-white/90 backdrop-blur shadow-xl max-w-md">
+        <div className="p-8 border-2 border-gray-900 rounded-3xl bg-white/90 backdrop-blur shadow-xl max-w-md no-print">
           <h3 className="text-lg font-bold mb-4">您是秒站會員嗎？登入免費上課</h3>
           <button className="flex items-center justify-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-xl font-bold hover:bg-black transition-all text-lg w-full">
             <LogIn className="w-5 h-5" /> 會員登入
@@ -119,7 +112,6 @@ const Hero: React.FC = () => (
         </div>
       </div>
 
-      {/* Right Portrait Placeholder */}
       <div className="hidden md:block">
         <Placeholder height="h-[600px] lg:h-[700px]" label="講師人像圖 / 課程情境圖" className="shadow-2xl border-none bg-white/20 backdrop-blur-sm" />
       </div>
@@ -146,7 +138,7 @@ const Intro: React.FC = () => (
 );
 
 const InstructorValue: React.FC = () => (
-  <Section id="instructor" className="bg-gray-50">
+  <Section id="instructor" className="bg-gray-50" isPageBreak>
     <div className="space-y-12">
       <div className="space-y-4 text-center">
         <h2 className="text-4xl lg:text-5xl font-black leading-tight">
@@ -164,7 +156,7 @@ const InstructorValue: React.FC = () => (
             <Placeholder height="h-96 md:h-[500px]" label="講師形象照片" className="rounded-2xl" />
           </div>
           <div className="md:col-span-3 space-y-8">
-            <div className="space-y-4 text-lg md:text-xl lg:text-2xl text-gray-700 leading-relaxed font-medium">
+            <div className="space-y-4 text-lg md:text-xl lg:text-2xl text-gray-700 leading-relaxed font-medium text-left">
               <p>由台灣 SEO 線上課程熱門講師暨秒站執行長 Frank 親自規劃</p>
               <p>不同於過去在各大課程平台的通用 SEO 課程</p>
               <p>這堂專為秒站所設計的 AI SEO 速攻學</p>
@@ -189,7 +181,7 @@ const Outcomes: React.FC = () => (
           "理解 AI 搜尋環境下，內容與結構如何調整",
           "不自覺間，搞懂網站後台操作"
         ].map((item, idx) => (
-          <div key={idx} className="flex items-start gap-4 p-6 bg-white border border-gray-200 rounded-2xl shadow-sm">
+          <div key={idx} className="flex items-start gap-4 p-6 bg-white border border-gray-200 rounded-2xl shadow-sm text-left">
             <CheckCircle2 className="w-6 h-6 text-gray-900 mt-0.5 flex-shrink-0" />
             <span className="text-lg font-bold text-gray-800 leading-tight">{item}</span>
           </div>
@@ -205,13 +197,13 @@ const Outcomes: React.FC = () => (
 );
 
 const Modules: React.FC = () => (
-  <Section id="modules" className="bg-gray-100">
+  <Section id="modules" className="bg-gray-100" isPageBreak>
     <div className="text-center mb-16">
       <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4">課程核心架構</h2>
       <p className="text-gray-500 text-lg lg:text-xl">本課程涵蓋三個核心模組，帶領你完成基礎建設：</p>
     </div>
     
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full text-left">
       {[
         { title: "模組一｜秒站後台 × SEO 必要設定", desc: "建立網站可被索引與理解的基本條件" },
         { title: "模組二｜內容與搜尋意圖的基礎做法", desc: "理解搜尋需求，避免方向性錯誤" },
@@ -290,7 +282,7 @@ const Syllabus: React.FC = () => {
   ];
 
   return (
-    <Section id="syllabus" className="bg-white">
+    <Section id="syllabus" className="bg-white" isPageBreak>
       <div className="text-center mb-20">
         <h2 className="text-4xl lg:text-5xl font-black mb-6">完整課綱</h2>
         <p className="text-gray-600 text-lg lg:text-xl w-full leading-relaxed">
@@ -300,8 +292,8 @@ const Syllabus: React.FC = () => {
 
       <div className="space-y-24">
         {data.map((section, idx) => (
-          <div key={idx} className="grid md:grid-cols-2 gap-16 lg:gap-24 items-start">
-            <div className={idx % 2 === 0 ? 'md:order-1' : 'md:order-2'}>
+          <div key={idx} className="grid md:grid-cols-2 gap-16 lg:gap-24 items-start text-left">
+            <div className={`${idx % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}>
               <h3 className="text-2xl md:text-3xl font-black mb-4 border-b-8 border-gray-900/5 pb-2 inline-block">
                 {section.title}
               </h3>
@@ -332,34 +324,32 @@ const Syllabus: React.FC = () => {
 };
 
 const CTA: React.FC = () => (
-  <Section className="bg-gray-100">
+  <Section className="bg-gray-100" isPageBreak>
     <h2 className="text-4xl lg:text-5xl font-black text-center mb-16">適合你的下一步</h2>
     
     <div className="grid md:grid-cols-2 gap-10">
-      {/* Existing User */}
       <div className="bg-white p-12 lg:p-16 rounded-[3rem] border-2 border-transparent hover:border-gray-900 transition-all shadow-xl text-center space-y-10 group">
-        <div className="space-y-4">
+        <div className="space-y-4 text-center">
           <h3 className="text-2xl md:text-3xl font-black">你已經是秒站站長？</h3>
           <div className="h-1 w-12 bg-gray-200 mx-auto group-hover:w-24 transition-all duration-500" />
           <p className="text-lg md:text-xl text-gray-500 font-bold flex items-center justify-center gap-2">
             <ArrowRight className="w-5 h-5" /> 打好經營基礎，讓網站被搜尋到
           </p>
         </div>
-        <button className="w-full py-5 px-8 bg-gray-900 text-white rounded-2xl font-black hover:bg-black transition-all text-xl lg:text-2xl flex items-center justify-center gap-2">
+        <button className="w-full py-5 px-8 bg-gray-900 text-white rounded-2xl font-black hover:bg-black transition-all text-xl lg:text-2xl flex items-center justify-center gap-2 no-print">
           登入會員，免費上課
         </button>
       </div>
 
-      {/* New User */}
       <div className="bg-white p-12 lg:p-16 rounded-[3rem] border-2 border-transparent hover:border-gray-900 transition-all shadow-xl text-center space-y-10 group">
-        <div className="space-y-4">
+        <div className="space-y-4 text-center">
           <h3 className="text-2xl md:text-3xl font-black">你尚未使用過秒站？</h3>
           <div className="h-1 w-12 bg-gray-200 mx-auto group-hover:w-24 transition-all duration-500" />
           <p className="text-lg md:text-xl text-gray-500 font-bold flex items-center justify-center gap-2">
             <ArrowRight className="w-5 h-5" /> 只要幾秒，輕鬆擁有品牌網站
           </p>
         </div>
-        <button className="w-full py-5 px-8 border-2 border-gray-900 text-gray-900 bg-white rounded-2xl font-black hover:bg-gray-50 transition-all text-xl lg:text-2xl flex items-center justify-center gap-2">
+        <button className="w-full py-5 px-8 border-2 border-gray-900 text-gray-900 bg-white rounded-2xl font-black hover:bg-gray-50 transition-all text-xl lg:text-2xl flex items-center justify-center gap-2 no-print">
           註冊免費試用
         </button>
       </div>
@@ -368,7 +358,7 @@ const CTA: React.FC = () => (
 );
 
 const Footer: React.FC = () => (
-  <footer className="py-16 bg-white text-center border-t border-gray-100">
+  <footer className="py-16 bg-white text-center border-t border-gray-100 no-print">
     <div className="w-full px-6 md:px-12 lg:px-20 flex flex-col md:flex-row justify-between items-center gap-8">
       <div className="flex items-center gap-2 font-black text-xl lg:text-2xl tracking-tighter">
         <div className="w-6 h-6 bg-gray-900 rounded flex items-center justify-center text-white text-[10px]">AI</div>
@@ -385,7 +375,6 @@ const Footer: React.FC = () => (
 
 export default function App() {
   React.useEffect(() => {
-    // Basic smooth scroll implementation for anchors
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -393,7 +382,7 @@ export default function App() {
         if (!targetId) return;
         const targetElement = document.querySelector(targetId);
         if (targetElement) {
-          const offset = 80; // Header height
+          const offset = 80;
           const bodyRect = document.body.getBoundingClientRect().top;
           const elementRect = targetElement.getBoundingClientRect().top;
           const elementPosition = elementRect - bodyRect;
@@ -408,17 +397,32 @@ export default function App() {
     });
   }, []);
 
+  const handleExportPDF = () => {
+    window.print();
+  };
+
   return (
     <div className="min-h-screen bg-white selection:bg-gray-900 selection:text-white">
       <Header />
-      <Hero />
-      <Intro />
-      <InstructorValue />
-      <Outcomes />
-      <Modules />
-      <Syllabus />
-      <CTA />
+      <main>
+        <Hero />
+        <Intro />
+        <InstructorValue />
+        <Outcomes />
+        <Modules />
+        <Syllabus />
+        <CTA />
+      </main>
       <Footer />
+
+      <button 
+        onClick={handleExportPDF}
+        className="fixed bottom-8 right-8 z-[60] bg-gray-900 text-white p-4 rounded-full shadow-2xl hover:bg-black hover:scale-110 transition-all flex items-center gap-2 group no-print"
+        title="匯出 PDF"
+      >
+        <FileDown className="w-6 h-6" />
+        <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 font-bold whitespace-nowrap">匯出 PDF</span>
+      </button>
     </div>
   );
 }
